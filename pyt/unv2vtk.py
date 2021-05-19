@@ -81,11 +81,11 @@ def unv2vtu( mshFile=None, fldFiles=None, vtkFile=None, elmFile=None ):
     for phys in physNums_list:
         index = np.where( physNums[:,1] == phys )
         helem = elems[index]
-        hnode = nodes[ np.array( list( set( np.ravel( helems ) ) ), dtype=np.int64 ) ]
         hcell = field[index]
+        hnode = np.copy( nodes )
         fname = vtkFile.replace( ".vtu", "_{0}.vtu".format( phys ) )
-        ret   = cug.construct__uGrid( elems=elems, nodes=nodes, cellData=field, cellDataName=fkeys, vtkFile=fname )
-    
+        ret   = cug.construct__uGrid( elems=helem, nodes=hnode, cellData=hcell, cellDataName=fkeys, \
+                                      vtkFile=fname )
     return()
 
 
